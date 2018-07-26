@@ -8,7 +8,7 @@ public class RunCommands {
     public static void run(Event event, String author, String message) {
         if (!message.startsWith("?")) return;
         if (message.equals("?hi")) {
-            final int response = (int) (Math.random() * 4);
+            final int response = (int) (Math.random() * 5);
             switch (response) {
                 case 0:
                     ((MessageReceivedEvent) event).getChannel().sendMessage("Have you ever been fed to the fishies?").queue();
@@ -22,6 +22,8 @@ public class RunCommands {
                 case 3:
                     ((MessageReceivedEvent) event).getChannel().sendMessage(":joy: lol u gay").queue();
                     break;
+				case 4:
+					((MessageReceivedEvent) event).getChannel().sendMessage("Are you saying hello to a bot now?").queue();
             }
         } else if (message.startsWith("?suicide")) {
             switch (message.split(" ")[1]) {
