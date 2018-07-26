@@ -32,16 +32,15 @@ public class RunCommands {
                     break;
             }
         } else if (message.startsWith("?balance")){
-            try {
-                if (message.split(" ")[1].equals("all")) {
-                    throw new NullPointerException("Jumps to show everything");
-                } else if (message.split(" ")[1].equals("diolas")) {
-                    ((MessageReceivedEvent) event).getChannel().sendMessage(
-                        ((MessageReceivedEvent) event).getAuthor() + " has ∂" +
-                            Person.people.get(((MessageReceivedEvent) event).getAuthor().getName()).dialos
-                    );
-                }
-            } catch (NullPointerException e) {
+            String term = message.split(" ")[1];
+            if (term.equals("diolas")) {
+                ((MessageReceivedEvent) event).getChannel().sendMessage(
+                    ((MessageReceivedEvent) event).getAuthor() + " has ∂" +
+                        Person.people.get(((MessageReceivedEvent) event).getAuthor().getName()).dialos
+                ).queue();
+            }
+
+            else if (term.equals("all")) {
                 //Show everything
             }
         }
