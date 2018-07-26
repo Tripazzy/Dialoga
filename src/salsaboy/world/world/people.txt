@@ -1,0 +1,8 @@
+name:Salsa Boy
+diolas:1000.00
+new
+name:VocalEcho
+diolas:500.00
+new
+name:TheOnlyMrCat
+diolas:750.00
