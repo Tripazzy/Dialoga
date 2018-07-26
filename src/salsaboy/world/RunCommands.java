@@ -38,9 +38,7 @@ public class RunCommands {
                     ((MessageReceivedEvent) event).getAuthor() + " has ∂" +
                         Person.people.get(((MessageReceivedEvent) event).getAuthor().getName()).dialos
                 ).queue();
-            }
-
-            else if (term.equals("all")) {
+            } else if (term.equals("all")) {
                 //Show everything
             }
         }
