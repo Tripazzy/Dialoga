@@ -1,6 +1,5 @@
 package salsaboy.world;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 import net.dv8tion.jda.core.AccountType;
@@ -20,24 +19,16 @@ import salsaboy.world.world.Person;
 import javax.security.auth.login.LoginException;
 
 public class MainRunner implements EventListener {
-    public static final boolean MAY_INVITE = false;
+    private static final boolean MAY_INVITE = false;
 
-    //For people who can administer the bot, of course
-    private static final ArrayList<Long> administrators = new ArrayList<>();
-    static {
-        administrators.add(363537161137422337L); // Salsa Boy
-        administrators.add(290324741187698688L); // TheOnlyMrCat
-    }
-
-    public static JDA jda;
     public static Guild dialogaServer;
     public static void main(String[] args) throws LoginException, InterruptedException {
         // Note: It is important to register your ReadyListener before building
-        jda = new JDABuilder(AccountType.BOT)
-            .setGame(Game.playing("v0.0"))
-            .setToken(args[0])
-            .addEventListener(new MainRunner())
-            .buildBlocking();
+        JDA jda = new JDABuilder(AccountType.BOT)
+                .setGame(Game.playing("v0.0"))
+                .setToken(args[0])
+                .addEventListener(new MainRunner())
+                .buildBlocking();
 
         dialogaServer = jda.getGuildById(471397977613926400L);
     }
@@ -50,7 +41,9 @@ public class MainRunner implements EventListener {
             RunCommands.run(event, ((GuildMessageReceivedEvent) event).getAuthor().getName(),
                     ((GuildMessageReceivedEvent) event).getMessage().getContentRaw());
         } else if (event instanceof PrivateMessageReceivedEvent) {
-            if (administrators.contains(((PrivateMessageReceivedEvent) event).getMessage().getAuthor().getIdLong())) {
+            // If the message author has the "Bot administrator" role
+            if (dialogaServer.getMembersWithRoles(dialogaServer.getRoleById(474488115055296515L))
+                    .contains(dialogaServer.getMember(((PrivateMessageReceivedEvent) event).getMessage().getAuthor()))) {
                 String[] msg = ((PrivateMessageReceivedEvent) event).getMessage().getContentRaw().split(" ");
                 String channelId = msg[0];
                 MessageChannel channel = dialogaServer.getTextChannelById(channelId);
@@ -66,9 +59,9 @@ public class MainRunner implements EventListener {
             }
         } else if (event instanceof GuildMemberJoinEvent) {
             if (!MAY_INVITE) {
-                if ((!((GuildMemberJoinEvent) event).getMember().getUser().getName().equals("VocalEcho")) &&
-                    (!((GuildMemberJoinEvent) event).getMember().getUser().getName().equals("TheOnlyMrCat")) &&
-                    (!((GuildMemberJoinEvent) event).getMember().getUser().getName().equals("taylor.gizelle"))) {
+                if (!(((GuildMemberJoinEvent) event).getMember().getUser().getName().equals("VocalEcho") ||
+                        ((GuildMemberJoinEvent) event).getMember().getUser().getName().equals("TheOnlyMrCat") ||
+                    ((GuildMemberJoinEvent) event).getMember().getUser().getName().equals("taylor.gizelle"))) {
                     ((GuildMemberJoinEvent) event).getGuild().getController()
                         .kick(((GuildMemberJoinEvent) event).getMember()).queue();
                 }
