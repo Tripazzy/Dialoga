@@ -24,6 +24,7 @@ public class RunCommands {
                     break;
 				case 4:
 					((MessageReceivedEvent) event).getChannel().sendMessage("Are you saying hello to a bot now?").queue();
+					break;
             }
         } else if (message.startsWith("?suicide")) {
             switch (message.split(" ")[1]) {
