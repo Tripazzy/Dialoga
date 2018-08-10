@@ -38,7 +38,7 @@ public class MainRunner implements EventListener {
         if (event instanceof ReadyEvent) {
             System.out.println("API is ready!");
         } else if (event instanceof GuildMessageReceivedEvent) {
-            RunCommands.run(event, ((GuildMessageReceivedEvent) event).getAuthor().getName(),
+            RunCommands.run((GuildMessageReceivedEvent) event, ((GuildMessageReceivedEvent) event).getAuthor().getName(),
                     ((GuildMessageReceivedEvent) event).getMessage().getContentRaw());
         } else if (event instanceof PrivateMessageReceivedEvent) {
             // If the message author has the "Bot administrator" role
@@ -68,7 +68,7 @@ public class MainRunner implements EventListener {
             } else {
                 Person toMake = new Person();
                 
-                toMake.dialos = 1000.00f;
+                toMake.setProperty("diolas", "1000.00");
             }
         }
     }

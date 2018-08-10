@@ -15,10 +15,29 @@ public class Person {
         }
         Scanner reader = new Scanner(Person.class.getResourceAsStream("people.txt"));   //LMAO Github nubs
         while (reader.hasNextLine()) {
-            final long name = Long.valueOf(reader.nextLine().split(":")[1]);
-            people.get(name).dialos = reader.nextFloat();
+            String topLine = reader.nextLine();
+            if (!topLine.startsWith("new")) break;
+
+            final long id = Long.valueOf(topLine.split("-")[1]);
+            Person person = new Person();
+
+            String line = reader.nextLine();
+            while (!line.equals("")) {
+                String[] property = line.split(":");
+                person.setProperty(property[0], property[1]);
+                line = reader.hasNextLine() ? reader.nextLine() : "";
+            }
+            people.put(id, person);
         }
     }
-    
-    public float dialos;
+
+    private Map<String, String> properties = new HashMap<>();
+
+    public String getProperty(String property) {
+        return properties.get(property);
+    }
+
+    public void setProperty(String property, String value) {
+        properties.put(property, value);
+    }
 }
